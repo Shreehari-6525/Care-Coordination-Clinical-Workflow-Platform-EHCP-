@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EHCP — Care Coordination & Clinical Workflow Platform</title>
+
+  <!-- External Dependencies -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Our Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       LOGIN SCREEN
+       ===================================================== -->
+  <div id="login-screen">
+    <div class="login-bg-grid"></div>
+    <div class="login-glow-left"></div>
+    <div class="login-glow-right"></div>
+
+    <div class="login-container">
+      <div class="login-card">
+
+        <!-- Logo -->
+        <div class="login-logo">
+          <div class="login-logo-icon">🏥</div>
+          <h1>EHCP</h1>
+        </div>
+        <p class="login-tagline">Care Coordination &amp; Clinical Workflow Platform</p>
+
+        <!-- Role Quick-Select -->
+        <div class="login-roles-title">Select Your Role</div>
+        <div class="role-grid">
+          <button class="role-btn" data-role="Admin">
+            <span class="role-icon">🛡️</span>
+            <span class="role-name">Admin</span>
+          </button>
+          <button class="role-btn selected" data-role="Doctor">
+            <span class="role-icon">👨‍⚕️</span>
+            <span class="role-name">Doctor</span>
+          </button>
+          <button class="role-btn" data-role="Nurse">
+            <span class="role-icon">👩‍⚕️</span>
+            <span class="role-name">Nurse</span>
+          </button>
+          <button class="role-btn" data-role="Receptionist">
+            <span class="role-icon">🧑‍💼</span>
+            <span class="role-name">Reception</span>
+          </button>
+          <button class="role-btn" data-role="Lab Technician">
+            <span class="role-icon">🔬</span>
+            <span class="role-name">Lab Tech</span>
+          </button>
+          <button class="role-btn" data-role="Billing Officer">
+            <span class="role-icon">💳</span>
+            <span class="role-name">Billing</span>
+          </button>
+          <button class="role-btn" data-role="Compliance Officer">
+            <span class="role-icon">📋</span>
+            <span class="role-name">Compliance</span>
+          </button>
+          <button class="role-btn" data-role="Patient">
+            <span class="role-icon">🧑</span>
+            <span class="role-name">Patient</span>
+          </button>
+          <button class="role-btn" data-role="Specialist">
+            <span class="role-icon">🩺</span>
+            <span class="role-name">Specialist</span>
+          </button>
+        </div>
+
+        <div class="login-divider">or enter credentials</div>
+
+        <!-- Credentials Form -->
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" id="login-username" class="form-input" value="dr.smith" placeholder="Enter username" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-input" value="doc123" placeholder="Enter password" autocomplete="current-password">
+        </div>
+
+        <p id="login-error" style="color:var(--clr-danger);font-size:0.8rem;min-height:18px;margin-bottom:4px"></p>
+
+        <button id="login-btn" class="btn-login">Sign In →</button>
+
+        <!-- Credentials Hint -->
+        <div class="login-credentials-hint">
+          <span style="font-size:0.68rem;color:var(--clr-text-dim);width:100%;margin-bottom:4px">Demo credentials (click role above to autofill):</span>
+          <span class="cred-tag">admin / admin123</span>
+          <span class="cred-tag">dr.smith / doc123</span>
+          <span class="cred-tag">nurse.ray / nurse123</span>
+          <span class="cred-tag">reception / recep123</span>
+          <span class="cred-tag">labtech / lab123</span>
+          <span class="cred-tag">billing / bill123</span>
+          <span class="cred-tag">compliance / comp123</span>
+          <span class="cred-tag">patient1 / pat123</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       APP SHELL
+       ===================================================== -->
+  <div id="app-shell" class="hidden">
+
+    <!-- Sidebar -->
+    <aside id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">🏥</div>
+        <div class="sidebar-logo-text">
+          <h2>EHCP</h2>
+          <p>Clinical Workflow Platform</p>
+        </div>
+      </div>
+
+      <!-- User Info -->
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sidebar-avatar">👤</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebar-user-name">Loading…</div>
+          <div class="sidebar-user-role" id="sidebar-user-role" style="color:var(--clr-text-muted)"></div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <nav id="nav-menu"></nav>
+
+      <!-- Footer -->
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logout-btn">⬅ Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div id="main-content">
+      <!-- Header -->
+      <header id="app-header">
+        <div class="header-left">
+          <div class="header-page-title" id="page-title">Dashboard</div>
+        </div>
+        <div class="header-right">
+          <!-- Notification Bell -->
+          <button class="header-icon-btn" id="notif-btn" title="Notifications">
+            🔔
+            <span class="notif-dot" id="notif-badge" style="display:none"></span>
+          </button>
+
+          <!-- Role Chip -->
+          <div class="header-role-chip" id="role-chip" style="color:var(--clr-primary);border-color:var(--clr-primary)">
+            Loading…
+          </div>
+        </div>
+      </header>
+
+      <!-- View Container -->
+      <div id="view-container">
+        <!-- Page content renders here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Root -->
+  <div id="toast-root"></div>
+
+  <!-- App Entry Point (ES Module) -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>
